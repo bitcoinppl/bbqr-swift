@@ -21,7 +21,7 @@ let package = Package(
         .binaryTarget(
             name: "bbqrffiFFI",
             url: "https://github.com/bitcoinppl/bbqr-swift/releases/download/0.3.1/Bbqr.xcframework.zip",
-            checksum: "8403cb5629b8c2daf6904a0311cc78ba5501ad672b08a624e3652c3dee8e44d3"
+            checksum: "203f209779393670627eb123dde09e5f54e3fce8eccfc1b631399a91e4112fae"
         ),
         .target(
             name: "Bbqr",
