@@ -81,7 +81,7 @@ jobs:
           rm Bbqr.xcframework.zip || true
           zip -9 -r Bbqr.xcframework.zip Bbqr.xcframework
           echo "FFI_CHECKSUM=`swift package compute-checksum Bbqr.xcframework.zip`" >> $GITHUB_ENV
-          echo "FFI_URL=https\:\/\/github\.com\/$\{{ github.repository_owner }}\/bbqr\-swift\/releases\/download\/${{ inputs.version }}\/Bbqr\.xcframework\.zip" >> $GITHUB_ENV
+          echo "FFI_URL=https\:\/\/github\.com\/${{ github.repository_owner }}\/bbqr\-swift\/releases\/download\/${{ inputs.version }}\/Bbqr\.xcframework\.zip" >> $GITHUB_ENV
 
       - name: "Update and tag release dist repo"
         working-directory: build/bbqr-swift
