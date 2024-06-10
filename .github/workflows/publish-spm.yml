@@ -103,7 +103,7 @@ jobs:
       - name: "Create release"
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/bbqr-swift/Bbqrxcframework.zip"
+          artifacts: "build/bbqr-swift/Bbqr.xcframework.zip"
           tag: ${{ inputs.version }}
           token: ${{ secrets.GITHUB_TOKEN }}
           name: Release ${{ inputs.version }}
