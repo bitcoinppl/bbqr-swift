@@ -23,5 +23,5 @@ See example app at: [example app]
 
 [Swift]: https://developer.apple.com/swift/
 [Xcode]: https://developer.apple.com/documentation/Xcode
-[bbqr-ffi]: https://github.com/bitcoinnppl/bbqr-ffi
+[bbqr-ffi]: https://github.com/bitcoinppl/bbqr-ffi
 [example-app]: https://github.com/bitcoinppl/bbqr-ffi/blob/master/examples/apple-multiplatform-spm/QrDemo/QrDemo/ContentView.swift
