@@ -39,11 +39,6 @@ jobs:
           rustup target add aarch64-apple-darwin   # mac M1
           rustup target add x86_64-apple-darwin    # mac x86_64
 
-      - name: "Run bbqrffi-bindgen"
-        working-directory: build/bbqr-ffi
-        run: |
-          cargo run --bin uniffi-bindgen generate --library ./target/aarch64-apple-ios/release-smaller/libbbqrffi.dylib --language swift --out-dir ../bbqr-swift/Sources/Bbqr
- 
       - name: "Build bbqr-ffi for all targets"
         working-directory: build/bbqr-ffi
         run: |
@@ -52,6 +47,11 @@ jobs:
           cargo build --profile release-smaller --target x86_64-apple-ios
           cargo build --profile release-smaller --target aarch64-apple-ios
           cargo build --profile release-smaller --target aarch64-apple-ios-sim
+
+      - name: "Run bbqrffi-bindgen"
+        working-directory: build/bbqr-ffi
+        run: |
+          cargo run --bin uniffi-bindgen generate --library ./target/aarch64-apple-ios/release-smaller/libbbqrffi.dylib --language swift --out-dir ../bbqr-swift/Sources/Bbqr
 
       - name: "Create lipo-ios-sim and lipo-macos"
         working-directory: build/bbqr-ffi
