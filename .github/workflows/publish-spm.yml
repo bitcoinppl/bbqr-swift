@@ -48,7 +48,7 @@ jobs:
           cargo build --profile release-smaller --target aarch64-apple-ios
           cargo build --profile release-smaller --target aarch64-apple-ios-sim
 
-      - name: "Run bbqrffi-bindgen"
+      - name: "Run uniffi-bindgen for bbqr-ffi"
         working-directory: build/bbqr-ffi
         run: |
           cargo run --bin uniffi-bindgen generate --library ./target/aarch64-apple-ios/release-smaller/libbbqrffi.dylib --language swift --out-dir ../bbqr-swift/Sources/Bbqr
@@ -81,7 +81,7 @@ jobs:
           rm Bbqr.xcframework.zip || true
           zip -9 -r Bbqr.xcframework.zip Bbqr.xcframework
           echo "FFI_CHECKSUM=`swift package compute-checksum Bbqr.xcframework.zip`" >> $GITHUB_ENV
-          echo "FFI_URL=https\:\/\/github\.com\/$\{{ github.repository_owner }}\/bbqr\-swift\/releases\/download\/${{ inputs.version }}\/{{module_name}}\.xcframework\.zip" >> $GITHUB_ENV
+          echo "FFI_URL=https\:\/\/github\.com\/$\{{ github.repository_owner }}\/bbqr\-swift\/releases\/download\/${{ inputs.version }}\/Bbqr\.xcframework\.zip" >> $GITHUB_ENV
 
       - name: "Update and tag release dist repo"
         working-directory: build/bbqr-swift
