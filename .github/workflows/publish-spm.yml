@@ -40,10 +40,10 @@ jobs:
           rustup target add x86_64-apple-darwin    # mac x86_64
 
       - name: "Run bbqrffi-bindgen"
-        working-directory: build/bbqrffi
+        working-directory: build/bbqr-ffi
         run: |
           cargo run --bin uniffi-bindgen generate --library ./target/aarch64-apple-ios/release-smaller/libbbqrffi.dylib --language swift --out-dir ../bbqr-swift/Sources/Bbqr
-
+ 
       - name: "Build bbqr-ffi for all targets"
         working-directory: build/bbqr-ffi
         run: |
@@ -54,7 +54,7 @@ jobs:
           cargo build --profile release-smaller --target aarch64-apple-ios-sim
 
       - name: "Create lipo-ios-sim and lipo-macos"
-        working-directory: build/bbqrffi
+        working-directory: build/bbqr-ffi
         run: |
           mkdir -p target/lipo-ios-sim/release-smaller
           lipo target/aarch64-apple-ios-sim/release-smaller/libbbqrffi.a target/x86_64-apple-ios/release-smaller/libbbqrffi.a -create -output target/lipo-ios-sim/release-smaller/libbbqrffi.a
@@ -88,12 +88,12 @@ jobs:
         run: |
           echo checksum = ${{ env.FFI_CHECKSUM }}
           echo url = ${{ env.FFI_URL }}
-          sed "s/BDKFFICHECKSUM/${BDKFFICHECKSUM}/;s/BDKFFIURL/${BDKFFIURL}/" Package.swift.txt > ../../dist/Package.swift
-          cp Sources/BitcoinDevKit/BitcoinDevKit.swift ../../dist/Sources/BitcoinDevKit/BitcoinDevKit.swift
+          sed "s/FFI_CHECKSUM/${FFI_CHECKSUM}/;s/FFI_URL/${FFI_URL}/" Package.swift.txt > ../../dist/Package.swift
+          cp Sources/Bbqr/Bbqr.swift ../../dist/Sources/Bbqr/Bbqr.swift
           cd ../../dist
-          git add Sources/BitcoinDevKit/BitcoinDevKit.swift
+          git add Sources/Bbqr/Bbqr.swift
           git add Package.swift
-          git commit -m "Update {{module_name}}.swift and Package.swift for release ${{ inputs.version }}" }}
+          git commit -m "Update Bbqr.swift and Package.swift for release ${{ inputs.version }}"
           git push
           git tag ${{ inputs.version }} -m "Release ${{ inputs.version }}"
           git push --tags
