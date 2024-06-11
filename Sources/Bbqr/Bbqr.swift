@@ -498,7 +498,7 @@ open class ContinuousJoiner:
     }
 
     open func addPart(part: String) throws -> ContinuousJoinResult {
-        return try FfiConverterTypeContinuousJoinResult.lift(rustCallWithError(FfiConverterTypeContinuousJoinError.lift) {
+        return try FfiConverterTypeContinuousJoinResult.lift(rustCallWithError(FfiConverterTypeJoinError.lift) {
             uniffi_bbqrffi_fn_method_continuousjoiner_add_part(self.uniffiClonePointer(),
                                                                FfiConverterString.lower(part), $0)
         })
@@ -847,56 +847,6 @@ public func FfiConverterTypeSplitOptions_lower(_ value: SplitOptions) -> RustBuf
     return FfiConverterTypeSplitOptions.lower(value)
 }
 
-public enum ContinuousJoinError {
-    case HeaderParseError(error: HeaderParseError
-    )
-    case JoinError(error: JoinError
-    )
-    case DecodeError(error: DecodeError
-    )
-}
-
-public struct FfiConverterTypeContinuousJoinError: FfiConverterRustBuffer {
-    typealias SwiftType = ContinuousJoinError
-
-    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> ContinuousJoinError {
-        let variant: Int32 = try readInt(&buf)
-        switch variant {
-        case 1: return try .HeaderParseError(
-                error: FfiConverterTypeHeaderParseError.read(from: &buf)
-            )
-        case 2: return try .JoinError(
-                error: FfiConverterTypeJoinError.read(from: &buf)
-            )
-        case 3: return try .DecodeError(
-                error: FfiConverterTypeDecodeError.read(from: &buf)
-            )
-
-        default: throw UniffiInternalError.unexpectedEnumCase
-        }
-    }
-
-    public static func write(_ value: ContinuousJoinError, into buf: inout [UInt8]) {
-        switch value {
-        case let .HeaderParseError(error):
-            writeInt(&buf, Int32(1))
-            FfiConverterTypeHeaderParseError.write(error, into: &buf)
-
-        case let .JoinError(error):
-            writeInt(&buf, Int32(2))
-            FfiConverterTypeJoinError.write(error, into: &buf)
-
-        case let .DecodeError(error):
-            writeInt(&buf, Int32(3))
-            FfiConverterTypeDecodeError.write(error, into: &buf)
-        }
-    }
-}
-
-extension ContinuousJoinError: Equatable, Hashable {}
-
-extension ContinuousJoinError: Error {}
-
 // Note that we don't yet support `indirect` for enums.
 // See https://github.com/mozilla/uniffi-rs/issues/396 for further discussion.
 
@@ -904,7 +854,7 @@ public enum ContinuousJoinResult {
     case notStarted
     case inProgress(partsLeft: UInt16
     )
-    case complete(Joined
+    case complete(joined: Joined
     )
 }
 
@@ -919,7 +869,7 @@ public struct FfiConverterTypeContinuousJoinResult: FfiConverterRustBuffer {
         case 2: return try .inProgress(partsLeft: FfiConverterUInt16.read(from: &buf)
             )
 
-        case 3: return try .complete(FfiConverterTypeJoined.read(from: &buf)
+        case 3: return try .complete(joined: FfiConverterTypeJoined.read(from: &buf)
             )
 
         default: throw UniffiInternalError.unexpectedEnumCase
@@ -935,9 +885,9 @@ public struct FfiConverterTypeContinuousJoinResult: FfiConverterRustBuffer {
             writeInt(&buf, Int32(2))
             FfiConverterUInt16.write(partsLeft, into: &buf)
 
-        case let .complete(v1):
+        case let .complete(joined):
             writeInt(&buf, Int32(3))
-            FfiConverterTypeJoined.write(v1, into: &buf)
+            FfiConverterTypeJoined.write(joined, into: &buf)
         }
     }
 }
@@ -1717,7 +1667,7 @@ private var initializationResult: InitializationResult {
     if uniffi_bbqrffi_checksum_func_default_split_options() != 18092 {
         return InitializationResult.apiChecksumMismatch
     }
-    if uniffi_bbqrffi_checksum_method_continuousjoiner_add_part() != 37717 {
+    if uniffi_bbqrffi_checksum_method_continuousjoiner_add_part() != 26183 {
         return InitializationResult.apiChecksumMismatch
     }
     if uniffi_bbqrffi_checksum_method_joined_data() != 37507 {
