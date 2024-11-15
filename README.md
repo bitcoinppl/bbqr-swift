@@ -11,7 +11,7 @@ Any changes to the `bbqr-swift` Swift package must be made via the [bbqr-ffi] re
 
 To use the Swift language bindings for [`Bbqr`] in your [Xcode] iOS or MacOS project:
 
-1. Add the "bbqr-swift" package from the repo https://github.com/bitcoindevkit/bbqr-swift and select one of the latest minor versions.
+1. Add the "bbqr-swift" package from the repo https://github.com/bitcoinppl/bbqr-swift and select one of the latest minor versions.
 2. Add the `Bbqr` framework in your Target config.
 3. Import and use the `Bbqr` library in your Swift code. For example:
 
